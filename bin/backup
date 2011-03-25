@@ -78,7 +78,7 @@ class BackupCLI < Thor
 
     ##
     # Process each trigger
-    options[:trigger].split(",").map(&:strip).each do |trigger|
+    options[:trigger].split(",").map { |t| t.strip }.each do |trigger|
 
       ##
       # Defines the TRIGGER constant
@@ -150,7 +150,7 @@ class BackupCLI < Thor
 
     [:databases, :storages, :syncers, :encryptors, :compressors, :notifiers].each do |item|
       if options[item]
-        options[item].split(',').map(&:strip).uniq.each do |entry|
+        options[item].split(',').map { |i| i.strip }.uniq.each do |entry|
           if File.exist?( File.join(TEMPLATE_DIR, item.to_s[0..-2], entry) )
             temp_file << File.read( File.join(TEMPLATE_DIR, item.to_s[0..-2], entry) ) + "\n\n"
           end
